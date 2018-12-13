@@ -106,7 +106,6 @@ function connectToRenderer(protocol: IMessagePassingProtocol): Promise<IRenderer
 }
 
 export async function execHostProcess(pipeName: string): Promise<ExtensionHostMain> {
-
 	return createExtHostProtocol(pipeName).then(protocol => {
 		// connect to main side
 		return connectToRenderer(protocol);

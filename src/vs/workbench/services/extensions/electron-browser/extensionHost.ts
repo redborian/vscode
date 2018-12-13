@@ -76,13 +76,11 @@ export class ExtensionHostProcessWorker implements IExtensionHostStarter {
 	private readonly _isExtensionDevTestFromCli: boolean;
 
 	// State
-	// private _lastExtensionHostError: string;
 	private _terminating: boolean;
 
 	// Resources, in order they get acquired/created when .start() is called:
 	private _namedPipeServer: Server;
 	private _inspectPort: number;
-	// private _extensionHostProcess: ChildProcess;
 	private _extensionHostProcess: Promise<ExtensionHostMain>;
 	private _extensionHostConnection: Socket;
 	private _messageProtocol: Promise<IMessagePassingProtocol>;
@@ -157,7 +155,7 @@ export class ExtensionHostProcessWorker implements IExtensionHostStarter {
 		}
 
 		if (!this._messageProtocol) {
-			this._messageProtocol = Promise.all([this._tryListenOnPipe(), this._tryFindDebugPort()]).then(async data => {
+			this._messageProtocol = Promise.all([this._tryListenOnPipe(), this._tryFindDebugPort()]).then(data => {
 				const pipeName = data[0];
 				const portData = data[1];
 
